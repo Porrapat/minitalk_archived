@@ -13,9 +13,21 @@
 #include <signal.h>
 #include "libft/libft.h"
 
-int	main(void)
+int	main(int argc, char **argv)
 {
-	ft_putstr_fd("Client    : ", 1);
+	if (argc != 3 || !ft_strlen(argv[2]))
+	{
+		ft_putendl_fd("Using with:", 1);
+		ft_putendl_fd("./client <process_id> <message>", 1);
+		return (1);
+	}
+		
+	ft_putstr_fd("Sent    : ", 1);
+	ft_putnbr_fd(ft_strlen(argv[2]), 1);
 	ft_putchar_fd('\n', 1);
+	ft_putstr_fd("Received: ", 1);
+
+	while (1)
+		pause();
 	return (0);
 }
