@@ -27,6 +27,24 @@ static void	action(int sig)
 	}
 }
 
+static void	kill_with_check(int pid, int sig)
+{
+	int	ret;
+
+	ret = 0;
+	if (pid == -1 || pid == 0)
+	{
+		ft_putendl_fd("Not Support Process ID 0 or -1.", 1);
+		exit(0);
+	}
+	ret = kill(pid, sig);
+	if (ret == -1)
+	{
+		ft_putendl_fd("Invalid Process ID.", 1);
+		exit(0);
+	}
+}
+
 static void	mt_kill(int pid, char *str)
 {
 	int		i;
@@ -39,16 +57,16 @@ static void	mt_kill(int pid, char *str)
 		while (i--)
 		{
 			if (c >> i & 1)
-				kill(pid, SIGUSR2);
+				kill_with_check(pid, SIGUSR2);
 			else
-				kill(pid, SIGUSR1);
+				kill_with_check(pid, SIGUSR1);
 			usleep(100);
 		}
 	}
 	i = 8;
 	while (i--)
 	{
-		kill(pid, SIGUSR1);
+		kill_with_check(pid, SIGUSR1);
 		usleep(100);
 	}
 }
