@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include <signal.h>
-#include "libft/libft.h"
+#include "ft_utils.h"
 
 static void	action(int sig)
 {

@@ -1,16 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   ft_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ppetchda <marvin@42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/07 13:18:59 by porrapat          #+#    #+#             */
-/*   Updated: 2022/02/07 13:22:55 by porrapat         ###   ########.fr       */
+/*   By: ppetchda <ppetchda@student.42bangkok.com>  +#+  +:+       +#+        */
+/*                                              +#+#+#+#+#+     +#+           */
+/*   Created: 2022/03/13 20:13:59 by ppetchda          #+#    #+#             */
+/*   Updated: 2022/03/13 20:18:35 by ppetchda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_utils.h"
+
+static int	ft_isdigit(int c)
+{
+	return (c >= 48 && c <= 57);
+}
+
+size_t	ft_strlen(const char *s)
+{
+	int	i;
+
+	i = 0;
+	if (!s)
+		return (0);
+	while (s[i] != '\0')
+		i++;
+	return (i);
+}
 
 int	ft_atoi(const char *str)
 {
