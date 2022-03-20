@@ -13,10 +13,12 @@
 #include <signal.h>
 #include "ft_utils.h"
 
-static void	action(int sig)
+static void	action(int sig, siginfo_t *info, void *context)
 {
 	static int	received = 0;
 
+	(void)context;
+	(void)info;
 	if (sig == SIGUSR1)
 		++received;
 	else
@@ -73,6 +75,9 @@ static void	mt_kill(int pid, char *str)
 
 int	main(int argc, char **argv)
 {
+	struct sigaction	s_sigaction;
+
+	ft_memset(&s_sigaction, 0, sizeof(s_sigaction));
 	if (argc != 3 || !ft_strlen(argv[2]))
 	{
 		ft_putendl_fd("Using with:", 1);
@@ -83,8 +88,10 @@ int	main(int argc, char **argv)
 	ft_putnbr_fd(ft_strlen(argv[2]), 1);
 	ft_putchar_fd('\n', 1);
 	ft_putstr_fd("Received: ", 1);
-	signal(SIGUSR1, action);
-	signal(SIGUSR2, action);
+	s_sigaction.sa_sigaction = action;
+	s_sigaction.sa_flags = SA_SIGINFO;
+	sigaction(SIGUSR1, &s_sigaction, 0);
+	sigaction(SIGUSR2, &s_sigaction, 0);
 	mt_kill(ft_atoi(argv[1]), argv[2]);
 	while (1)
 		pause();
